@@ -25,9 +25,10 @@ var pokemonList = [
 }
 ];
 
-for (var i = 0; i < 4; i++) {
-	document.write(pokemonList[i].name + "'s" + " " + "is" + " " + pokemonList[i].height + "m" + "<br>")
-	if (pokemonList[i].height == 1.7) {
+pokemonList.forEach(function(pokemon) {
+	document.write(pokemon.name + "'s" + " " + "is" + " " + pokemon.height + "m" + "<br>")
+	if (pokemon.height == 1.7) {
 		document.write( "<br>" + "<br>" + "Watching the movie you'd think this pokemon was a lot taller than it is according to the Pokedex.")
-	}
-	}
+		}
+})
+	
