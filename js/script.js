@@ -1,5 +1,4 @@
 var pokemonRepository = (function () {
-	// variable begins
 var pokemonList = [
 		{
 			dexNumber: "#" + 037,
@@ -26,24 +25,41 @@ var pokemonList = [
 			homeRegion: "Hoenn"
 		}
 	];
-	// variable ends
+	function showDetails (pokemon) {
+		console.log(pokemon);
+	};
+
+	function listener (button, pokemon) {
+		button.addEventListener('click', function (pokemon) {
+			showDetails(pokemon.target);
+		});
+	}
+
+	function addListItem(pokemon) {
+		var poke = document.querySelector('.pokemon-list');
+		var listItem = document.createElement(("li"));
+		var button = document.createElement('button');
+		button.innerText = pokemon.name;
+		listener(button, pokemon);
+		listItem.appendChild(button);
+		poke.appendChild(listItem);
+	};
+
 	function getAll() {
 			return pokemonList;
-		}
+		};
 
 	function add(pokemon) {
 			pokemonList.push(pokemon);	
-		}
+		};
 	return {
+		addListItem: addListItem,
 		add: add,
 		getAll: getAll
 	};
 })()
-
+// the parameter pokemon is pokemonList. follow it through each function
 pokemonRepository.getAll().forEach(function(pokemon) {
-	document.write(pokemon.name + "'s" + " " + "is" + " " + pokemon.height + "m" + "<br>")
-	if (pokemon.height == 1.7) {
-		document.write( "<br>" + "<br>" + "Watching the movie you'd think this pokemon was a lot taller than it is according to the Pokedex.")
-		}
+	pokemonRepository.addListItem(pokemon)	
 })
 	
