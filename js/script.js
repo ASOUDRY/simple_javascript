@@ -25,14 +25,13 @@ var pokemonList = [
 			homeRegion: "Hoenn"
 		}
 	];
-	// function showDetails (pokemon) {
-	// 	console.log(pokemon);
-	// };
+	function showDetails (pokemon) {
+		console.log(pokemon);
+	};
 
 	function listener (button, pokemon) {
 		button.addEventListener('click', function () {
-			console.log(pokemon)
-			// showDetails(pokemon.value);
+			showDetails(pokemon);
 		});
 	}
 
