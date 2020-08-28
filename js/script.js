@@ -3,12 +3,66 @@ var pokemonList = [];
 	
 	var apiUrl = 'https://pokeapi.co/api/v2/pokemon/?limit=150';
 
+	// Modular Code Starts here
+      function showModal(pokemage, pokename, pokeheight) {
+	  var modalContainer = document.querySelector('#modal-container');
+
+	  modalContainer.innerHTML = '';
+
+	  var modal = document.createElement('div');
+  	  modal.classList.add('modal');
+
+  	  var closeButtonElement = document.createElement('button');
+      closeButtonElement.classList.add('modal-close');
+      closeButtonElement.innerText = 'Close';
+      closeButtonElement.addEventListener('click', hideModal);
+
+      // Create the three Elements
+      var img = document.createElement('img');
+      img.src = pokemage;
+
+	  var name = document.createElement('h1');
+  	   name.innerText = pokename;
+
+	  var height = document.createElement('p');
+	  height.innerText = pokeheight;
+      // actually attaching the code to a button
+      modal.appendChild(img);
+      modal.appendChild(closeButtonElement);
+	  modal.appendChild(name);
+  	  modal.appendChild(height);
+      modalContainer.appendChild(modal);
+
+	  modalContainer.classList.add('is-visible');
+	}
+
+	function hideModal() {
+    var modalContainer = document.querySelector('#modal-container');
+    modalContainer.classList.remove('is-visible');
+    }
+    // e key is escape key
+	window.addEventListener('keydown', (e) => {
+	  var modalContainer = document.querySelector('#modal-container');
+	  if (e.key === 'Escape' && modalContainer.classList.contains('is-visible')) {
+	    hideModal();  
+	  }
+      modalContainer.addEventListener('click', (e) => {
+		  // Since this is also triggered when clicking INSIDE the modal
+		  // We only want to close if the user clicks directly on the overlay
+		  var target = e.target;
+		  if (target === modalContainer) {
+		    hideModal();
+		  }
+		});
+	});
+
+	// Modular Code Ends Here
+
 	function showDetails(pokemon) {
 	  	loadDetails(pokemon).then(function () {
-	    console.log(pokemon);
+	  	showModal(pokemon.imageUrl, pokemon.name, pokemon.height)
 		  });
 		}
-
 
 	function listener (button, pokemon) {
 		button.addEventListener('click', function () {
@@ -37,7 +91,7 @@ var pokemonList = [];
 	function showLoadingMessage() {
           console.log("Booting up the Pokedex");
 	}
-
+    // clears the console
 	function hideLoadingMessage() {
 		console.clear();
 	}
@@ -76,6 +130,7 @@ var pokemonList = [];
 	      console.error(e);
 	    });
 	  }
+	  // The properties the repository can return
 	  return {
 	    add: add,
 	    getAll: getAll,
@@ -86,9 +141,8 @@ var pokemonList = [];
 })()
 
 pokemonRepository.loadList().then(function() {
-  // Now the data is loaded!
+  // Follow the Pokemon List all the way through the variables
   pokemonRepository.getAll().forEach(function(pokemon){
     pokemonRepository.addListItem(pokemon);
   });
 });
-	
